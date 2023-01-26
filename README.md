@@ -1,1 +1,1 @@
-# Statistical_Categorization
+# Statistical categorization practice in R.
