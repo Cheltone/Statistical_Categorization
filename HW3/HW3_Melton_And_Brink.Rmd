@@ -1,0 +1,413 @@
+---
+title: "HW3 Chad Melton and Rebecca Brink"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(epiR)
+library(ggplot2)
+library(vcdExtra)
+library(vcd)
+library(MASS)
+library(lmtest)
+```
+
+
+## 3.2
+a)
+
+piHat = -0.0003 + 0.0304x and piHat = P%xi. 
+Now,
+0.0304 = 0.01P
+
+```{r}
+
+P = 0.0304/0.01
+P
+
+```
+
+b)
+```{r}
+piHat = 0.0079
+xi = 0.0774
+Pi = xi*0.0304-0.0003
+Pi
+
+rat = piHat/Pi
+rat
+```
+
+This calculation suggests that the value of Pii (0.0079) is an outlier in the data because the 3.8>>0.0079.
+
+## 3.3
+
+a) 
+
+From the model selected we know that the equation follows the form $\pi \hat =$ intercept +parameter coefficient * parameter. From the table given, we can see that the prediction equation is:
+\[ \hat \pi  =0.00255 +0.00109x  \]
+where x is the alcohol consumption. The intercept of this equation means that the probability of a child having sex organ malformation without the influence of alcohol is only about 0.00255. This increases as a rate of 0.00109 which means that the probability of sex organ malformation doubles with every increase of 2 in alcohol consumption. 
+
+b)
+
+First step in computing the relative risk is to calculate the probability of malformation at each alcohol level. Do this by plugging in 0 and 7 for x. 
+
+For $x=0$ we have $\hat \pi_0 = 0.00255 +0.00109(0) =0.00255$ and 
+
+For $x=7$ we have $\hat \pi_7 = 0.00255 +0.00109(7)=0.01018$. 
+
+The relative risk is then $\frac{\hat\pi_7}{\hat \pi_0}=\frac{0.01018}{0.00255}=4.0$ 
+
+
+
+
+
+
+## 3.4
+
+To set up this problem, we first have to find a linear model that satisfies the conditions set up in problem 3.3. Our model may be slightly different as teh text book used SAS and we are using R. We have also opted to only use the percentage of arrests data so our numbers are different. This first linear model is set up by the code below. 
+
+```{r}
+consumption= c(0,0.5,1.5,4.0,7.0)
+percentage=c(0.0028,0.0026,0.0063,0.0079,0.0263)
+data1=data.frame(consumption,percentage)
+data1.model=lm(percentage~consumption,data=data1)
+summary(data1.model)
+```
+This model is assumed to be our baseline. 
+
+a) 
+
+To see if the result is sensitive to the final data point where the percentage of the malformations is an order of magnitude higher due to only one malformation, we re-fit the same model assuming no malformations in this category. This is set up below.
+
+```{r}
+consumption2=c(0,0.5,1.5,4.0,7.0)
+percentage2=c(0.0028,0.0026,0.0063,0.0079,0.0000)
+data2=data.frame(consumption2,percentage)
+data2.model=lm(percentage2~consumption2,data=data2)
+summary(data2.model)
+```
+
+The intercept for the model is about 4 times higher, but more importantly the effect of alcohol consumption in the model is negative. This would imply that drinking more alcohol reduces the chance of malfomation in newborns. I am no pediatrics researcher, but I am pretty sure that shouldn't be the case. This means that the one malformation we see at the largest alcohol consumption rate is an important data point to the dataset. 
+
+b) 
+
+We again try to see the sensitivity of the model, but this time to the values of scores. If we change the values of the scores, we expect the intercept to remain fairly constant and the parameter coefficeint to shift slightly. We set up this model in the code below. 
+
+```{r}
+consumption3=c(0,1,2,3,4)
+percentage=c(0.0028,0.0026,0.0063,0.0079,0.0263)
+data3=data.frame(consumption3,percentage)
+data3.model=glm(percentage~consumption3,data=data2,)
+summary(data3.model)
+```
+
+We see that our parameter coefficient shifted by an order of magnitude. This seems to be a large jump for a max change of scores from 7 to 4, however when we look at the intercept it makes sense that the coefficeint changed that much. The intercept is negative. This means that not drinking any alcohol should lower the risk of drinking past zero and ensure no malformations in newborns. This does not make logical sense. A model of this data set is dependent on accurate values of the number of drinks consumed and the proportions of malformations at every level regardless of how high.  
+
+
+c) Below is the code to fit the required model.
+
+```{r}
+consumption= c(0,0.5,1.5,4.0,7.0)
+percentage=c(0.0028,0.0026,0.0063,0.0079,0.0263)
+data4=data.frame(consumption,percentage)
+data4.model=glm(percentage~consumption,data=data4, family = binomial(link = "probit"))
+summary(data4.model)
+```
+
+This should follow the equation: Probit(PiHat = -2.7860 +0.0614x.
+
+
+## 3.13
+
+a)
+
+```{r}
+
+crab = read.csv("C:\\Users\\chadm\\OneDrive\\Documents\\StatsData\\crab.csv",header=TRUE)
+
+crab.model = glm(satell~weight,data=crab,family = poisson(link ="log"))
+summary(crab.model)
+
+```
+
+The equation is: log(muHat) = -0.42841 + 0.58930x
+
+
+b)
+
+```{r}
+x=2.44
+
+muHat = exp(-0.42841 + 0.58930*x)
+```
+
+The mean Y for female crabs of average weight 2.44 kg is 2.744179.
+
+
+c)
+```{r}
+confint(crab.model)
+ciLow = exp(0.4597)
+ciHi = exp(0.7167)
+```
+
+The CI for muHat is (1.583599, 2.047665).
+
+
+d)
+```{r}
+waldtest(crab.model)
+```
+The Wald test provides a value of 82.155 and one degree of freedom. Here, the P-Value is also ~0 which suggest that 
+there is very strong evidence to reject the null hypothesis and shows that weight is significant.
+
+e)
+```{r}
+lrtest (crab.model)
+```
+
+The likelihood ratio tests provides a value of 71.295. 
+Again, these results suggest strong evidence to reject the null hypothesis.
+
+
+## 3.14
+a)
+```{r}
+crab.model2 = glm.nb(satell~weight,data=crab)
+summary(crab.model2)
+```
+The equation for the neg binomial model is log(mu2) = -0.8647 + 0.7603x. Here, the dispersion parameter
+is 0.931 with a standard error of 0.168. Also, the ratio of the residual deviance to df is ~ 1.15 (overdispersion
+but not drastic). These values suggest that the neg binomial model is a better fit for these data.
+
+b)
+```{r}
+confint(crab.model2)
+```
+The confidence interval is (0.4207032, 1.113666186).The interval range is wider for the neg binomial model 
+due to the existance of the parameter that deals with overdispersion in model.
+
+
+## 3.18
+
+a) 
+We first consider dimensions. The expected value of Y in this case should be the number of arrests. \mu is the rate of arrests [number of arrests / 1000 fans] and t in the number of fans [in thousands] this means that if $E[Y]=\mu t$ we get the number of arrests expected at a game. If we solve for \mu then we get $\mu=E[Y]/t$ which gives us the rate of arrests. This number should be an integer greater than 0. $log(E[Y]/t)=log(\mu)$ would help us to enforce the positive parameter. Let us denote $log(\mu)=\alpha$. In R, this is expressed as: 
+glm(Arrests~1+offset(log(Attendance)),data=soccer,family=poisson(link="log"))
+
+b) The model for the problem is set up below.
+
+
+```{r}
+soccer = read.csv("C:\\Users\\chadm\\OneDrive\\Desktop\\Fall_2020\\STATS 578\\HW\\soccer.csv",header=TRUE)
+View(soccer)
+soccer.model=glm(Arrests~1+offset(log(Attendance)),data=soccer,family=poisson(link="log"))
+summary(soccer.model)
+```
+
+Our value of \alpha is -0.91028 which leads to a $\hat \mu = e^\alpha =e^{-0.91028}=0.40241$. This rate is the estimated arrests per thousands of fans attending. 
+
+
+c) The graphs are produced according to the code below. 
+
+```{r}
+attend.sort=order(soccer$Attendance)
+plot(soccer$Arrests~soccer$Attendance,pch=3,col="red")
+points(soccer.model$fitted.values[attend.sort]~soccer$Attendance[attend.sort],pch=2,col="black")
+```
+
+Using residuals, Aston Villa and Bournemouth are both teams that had an unexpectedly high arrest rate. Manchester City, Plymouth, Reading, and Hull City all have lower than expected arrest rates.
+
+
+
+d) We first set up the model as shown in the code below.
+
+```{r}
+soccer.model2=glm.nb(Arrests~1+offset(log(Attendance)),data=soccer)
+summary(soccer.model2)
+```
+
+This model has an \alpha of -0.9052 with a standard error of 0.1200. This is very similar to the previous poisson model where \alpha was -0.91028 witha standard error of 0.02164. The standard error in the negative binomial model has a larger deviation than that of the poisson model. Therefore, the Poisson does not support sufficient variability. 
+
+
+
+
+
+
+
+
+
+
+## 3.20
+
+a) 
+
+We use the code below to format the data and calculate the sample coronary death rates as requested. The plots of the outputs are shown below. 
+
+```{r}
+Age = c(40,40,50,50,60,60,70,70,80,80)
+Smoke = rep(c("Y","N"),5)
+PersonYrs = c(52407,18793,43248,10673,28612,5710,12663,2585,5317,1462)
+Deaths = c(32,2,104,12,206,28,186,28,102,31)
+
+smoking = data.frame(Age,Smoke,PersonYrs,Deaths)
+smoking$Smoker=0
+smoking$Smoker[Smoke=="Y"] = 1
+smoking$logPersonYrs = log(smoking$PersonYrs/1000);
+smoking$Rate = smoking$Deaths/(smoking$PersonYrs/1000);
+smoking$Age2 =smoking$Age  #use this for part c?;
+
+library(ggplot2)
+qplot(Age,Rate, data = smoking, shape = Smoke)
+
+#Ratio Plot
+
+nSmk = smoking[smoking$Smoke=="N",]
+Smk = smoking[smoking$Smoke=="Y",]
+Smk$Ns.rate = nSmk$Rate
+Smk$Ratio = Smk$Rate/Smk$Ns.rate  #smoking coronary death rate/non-smoking death rate.
+
+qplot(Age,Ratio, data = Smk)
+
+```
+
+We can see in these figures that the ratio of heart attacks between smokers and nonsmokers is highly nonlinear. The ratio of younger smokers to younger non-smokers who have heart attacks is much higher than the ratio of older smokers to older non-smokers. This could be because as shown in the first plot, the rate of heart attack is much higher for people in their 80's. This is clearly a variable relationship.
+
+
+b) 
+
+We want a poisson model that has a total of six parameters. The equation that we are asked for comes in the form:
+
+loga(μ/t)= β_0+ β_S I(Smoker=Yes)+β_(Age=40) I(Age=40)+β_(Age=50) I(Age=50)+β_(Age=60) I(Age=60)+β_(Age=70) I(Age=70)
+
+This model is set up by the code shown below.
+
+```{r}
+is.factor(smoking$Smoke)
+is.factor(smoking$Age)
+partb = glm(Deaths ~ factor(Age)+Smoke+offset(logPersonYrs),data=smoking,family=poisson(link="log"))
+summary(partb)
+deviance(partb)
+```
+
+From the equation, we can see that there is only one term of smoking vs not and the rest of the terms are age dependant. This means that there is only one place our model considers smoking or not, and age is not a factor in smoking or risk from smoking. Considering the fact that we determined that the risk of heart attack from smoking was not linear in regards to age, this model would not be appropriate. This model would be appropriate if the risk of smoking was constant and compounded by the risk of heart attack correlated with age. The mathmatical way of showing this model to be insufficent is to consider loga((μ_s/t)/(μ_NS/t). This shows the averae risk of smokers to nonsmokers. In our selected model this becomes:
+loga((μ_s/t)/(μ_NS/t))=loga(μ_s/t)-loga(μ_NS/t)=  (β_0+ β_S+β_(Age=x) )    -(β_0+β_(Age=x) )=β_S  
+
+which means the risk is only a function of smoking and not a function of age at all. 
+
+
+c)  
+
+We can see clearly from the plots in the first part of the problem that the relationship between smoking and age is not linear and that heart attack rates are dependent on both factors. Instead of a model with an additive relationship between age and smoking, it may be more beneficial to try a multiplicative relationship so that the ratio can change according to age. This is shown by the equation: 
+
+loga(μ/t)= β_0+ β_1 * I(Smoker=Yes)+β_2 Age +β_3 Age * I(Smoker=Yes)
+
+When we take the same log ratio, loga((μ_s/t)/(μ_NS/t), we now get the equation: 
+
+loga((μ_s/t)/(μ_NS/t))=loga(μ_s/t)-loga(μ_NS/t)=  (β_0+ β_S+β_Age Age+β_(A * S) Age)-(β_0+β_Age Age)=β_S+β_(A*S) Age
+
+This makes much more sense as the final risk is a factor of both age and smoking habit. It also is simplified as there is now only one factor concerning age. The below code sets up this model and prints the summary showing the parameters. 
+
+```{r}
+partc = glm(Deaths ~ Age+Smoke+Age*Smoke+offset(logPersonYrs),data=smoking,family=poisson())
+summary(partc)
+deviance(partc)
+```
+
+Looking at this model, and comparing it to the model in b, we note several important things. The first is the deviance. In terms of deviance, the model in b performs better. This is in part because we did not treate age as a categorical value in the model above but instead treated it as a continous variable. Logically, the model presented here makes sense as the risk of heart attack goes up with age and initially increases with smoking but then the smokng affect lessens as the age range increases. Since our problem is one of data structure, we could create a hybrid model with the original model but add the single quantitaitive model for age and smoking. This is set up in R code below.
+
+```{r}
+partd = glm(Deaths ~ factor(Age)+Smoke+Age*Smoke+offset(logPersonYrs),data=smoking,family=poisson())
+summary(partd)
+deviance(partd)
+
+```
+
+d) 
+
+This section says to compare the models in parts b and c. Some of this discussion can be found in part c, so we pick up discussing the hybrid model that we programmed. In this model, there are 10 coefficients present as displayed above.  This means that the model is directly modeling all 10 observations. This model will give us good results, but is most likely overfit. 
+
+
+
+
+
+## Problem 2
+
+```{r}
+Pos = read.csv("C:\\Users\\chadm\\OneDrive\\Desktop\\Fall_2020\\STATS 578\\HW\\dvisits.csv",header=TRUE)
+```
+
+
+a)
+```{r}
+Pos.model = glm(doctorco ~ sex + age + agesq + income + levyplus + freepoor + freerepa + illness + actdays + hscore + chcond1 + chcond2, family=poisson, data = Pos)
+Pos.model
+summary(Pos.model)
+```
+
+
+
+
+b) 
+
+```{r, echo=FALSE}
+
+
+par(mfrow=c(1,1))
+plot(Pos.model)
+
+```
+
+The line patterns in these data are due to the fact that the data are discrete. 
+
+c)
+
+```{r}
+step(Pos.model, direction="backward")
+```
+
+d)
+
+This model suggests an elderly person would visit more frequently than other types of people
+
+#e)
+```{r}
+
+predict(Pos.model, Pos[1,], type="response")
+
+for(i in 0:10) {
+  print ("Doctor visits = ")
+  print(i)
+  print(dpois(i, lambda = 0.153))
+  
+  }
+ ```
+
+f)
+
+```{r}
+LinM <- lm(doctorco ~ sex + age + agesq + income + levyplus + freepoor + freerepa + illness + actdays + hscore + chcond1 + chcond2, data=Pos)
+LinM
+
+summary(LinM)
+
+predict(LinM, Pos[5190,])
+```
+
+```{r, echo=FALSE}
+
+par(mfrow=c(1,1))
+plot(LinM)
+
+```
+
+Graphically at a distance, these two models seem to be mostly similar in slope. However, a closer look reveals more nuanced features in both models.The Gaussian LM slopes slightly negatively until x = ~0.5 and then reverses slope direction, eventually forming a gradual shape similar to a square root equation. The Poisson GLM appears to have a gradual bell or Gaussian shaped curve shape.
+

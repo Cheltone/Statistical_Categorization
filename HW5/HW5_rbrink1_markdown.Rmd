@@ -1,0 +1,165 @@
+---
+title: "STAT578_HW5_rbrink1"
+author: "rbrink1"
+date: "11/2/2020"
+output: html_document
+---
+
+
+## Problem 5.23
+
+### Part a
+
+We start the problem by fitting the model to the data as requested. 
+
+```{r}
+library(survival)
+library(MASS)
+library(lmtest)
+data23=read.csv(".\\Pr5.23.csv")
+data23.fit=glm(cbind(response,count)~delay+pen1+pen2+pen3+pen4+pen5-1,data=data23,family=binomial(link="logit"))
+summary(data23.fit)
+```
+
+We see that the last coefficient in the penicillan category has a very insignificant p-value. For the first value, the model gives us a significant coefficient that is within the realm of possibility. We can see from the data that these values should approach infinity and negative infinity respectively. However the answers reported make logical sense if we just look at the values. This indicates that the model does not perform as expected when zeros are present. It should also be noted that if this model is run with an intercept term, the last penicillan vlaue is null and the first has a much larger standard deviation.   
+
+### Part b
+
+Here we run the models for each of the likelihood ratios. 
+
+```{r}
+
+data23b=read.csv(".\\Pr5.23_b.csv")
+data23b.fit1=glm(cbind(response,count)~delay+pen1-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit1)
+```
+
+```{r}
+data23b.fit2=glm(cbind(response,count)~delay+pen2-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit2)
+```
+
+
+```{r}
+data23b.fit3=glm(cbind(response,count)~delay+pen3-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit3)
+```
+
+```{r}
+data23b.fit4=glm(cbind(response,count)~delay+pen4-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit4)
+```
+
+```{r}
+data23b.fit5=glm(cbind(response,count)~delay+pen5-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit5)
+```
+
+```{r}
+data23b.fit=glm(cbind(response,count)~delay+pen1+pen2+pen3+pen4+pen5-1,data=data23,family=binomial(link="logit"))
+lrtest(data23b.fit)
+```
+
+For the first two parameters the LR test produces very similar results to the null which indicates that there is some sort of independence. The other parmeters however do not produce results similar to the null which indicates some sort of dependence. The model with all parameters again produces a result that would indicate independence on x, however with a very insignificant p-value. 
+
+### Part c
+
+Here we compare the odds ratios for the models to calculate the conditional odds ratio.  This is the odds ratio of the model with all parameters over the model with the first parameter with the coefficient effect multiplied by five. If independent of x, this ratio should be equal to one. 
+
+```{r}
+a=sum(exp(coef(data23.fit)))
+b=exp(coef(data23.fit1))
+c=b[1]+b[2]*5
+odds=a/c
+odds
+```
+
+Here the odds ratio is slightly above one, but greatly enough that we assume there is some sort of dependence between x and y. 
+
+## Problem 5.26
+### Part a
+
+We start this problem by loading the data and setting up a model for each feature. A brief discussion of each coefficient follows the model for that feature.
+
+```{r}
+tab15=read.csv(".\\Tab515.csv")
+data.fitx1=glm(y~x1,data=tab15,family=binomial(link="logit"))
+summary(data.fitx1)
+```
+For x1, we see that the model has a coefficient of -0.6383 and a standard deviation of 0.3808. Looking at the p-value, we see that this feature is not significant at a 95% confidence level. We now repeat the process for x2. 
+
+```{r}
+data.fitx2=glm(y~x2,data=tab15,family=binomial(link="logit"))
+summary(data.fitx2)
+```
+
+In this model, we see that x2 has a coefficient of -0.3096 and a standard deviation of 0.1555. This feature is significant at a confidence level of 95%. We repeat yet again for x3.
+
+```{r}
+data.fitx3=glm(y~x3,data=tab15,family=binomial(link="logit"))
+summary(data.fitx3)
+```
+
+In this final (for part a) model, we see that the feature x3 has a coefficient of 0.0117 and a standard deviation of 0.03224. The standard deviation is nearly three times the value of the coefficient so we are highly suspicious of the quality of this model. We can see that this feature is insginificant. 
+
+### Part b
+
+Now we look at a main features model containing a coefficient for each feature. We set up this model and run it below.
+
+```{r}
+data.fit=glm(y~x1+x2+x3,data=tab15,family=binomial(link="logit"))
+summary(data.fit)
+```
+
+The first thing we note is that we get a convergence error when we run this model. Looking at the coefficeints for parameters with this error in mind we see that we get large coefficients. We get standard errors that are orders of magnitude greater than all the coefficents. All coefficients also have exactly the same p-value of 0.975. This shows that none of them are significant in this model. 
+
+### Part c
+
+We originally had this set up in R, however as the results did not make sense and Dr. Zaretzki said that this did not perform as desired we tried to set this up in SAS we ran out of time to produce this code and could not re-do the problem in SAS with our other responsibilites between class and the due date. Thank you for your understanding.  Below is the rcode used that did not make sense.
+
+```{r}
+data.conditional=clogit(y~x1+x2+x3,data=tab15,method="exact")
+summary(data.conditional)
+```
+
+```{r}
+data.conditional1=clogit(y~x1,data=tab15,method="exact")
+summary(data.conditional1)
+```
+
+```{r}
+data.conditional2=clogit(y~x2,data=tab15,method="exact")
+summary(data.conditional2)
+```
+
+```{r}
+data.conditional3=clogit(y~x3,data=tab15,method="exact")
+summary(data.conditional3)
+```
+## Problem 5.28
+
+### Part a
+Here we use JMP to calculate the size of sample needed. The image of the program for this part is shown below. 
+![Caption for the picture.](./HW5_5.28a.png)
+
+We find we need a sample size of 293 for each category for a total sample of 586.
+
+### Part b
+
+We repeat the process in part a for all the parameters listed in part b. 
+
+![Caption for the picture.](./HW5_5.28bi.png)
+
+![Caption for the picture.](./HW5_5.28bii.png)
+
+![Caption for the picture.](./HW5_5.28biii.png)
+
+The four models are compared in the table below. 
+```{r,echo=FALSE}
+paramz=matrix(c(90,90,95,95,80,90,80,90,586,784,708,926),4,3,byrow=FALSE)
+grad=data.frame(paramz)
+names(grad)=c("Confidence Interval","Power","Sample Size")
+grad
+```
+
+We see in this table that the greater the confidence level is the larger the sample size must be. A greater effect can be seen with the power of the model. This means that increasing the chance of differenciating between the two proportions is going to drastically increase the sample size required. 

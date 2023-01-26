@@ -1,0 +1,323 @@
+---
+title: "Logistic Regression in R - Chap 5"
+author: "Russell Z"
+date: "April 18, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(car)
+library(faraway)
+library(ggplot2)
+MichelinNY <- read.csv("http://gattonweb.uky.edu/sheather/book/docs/datasets/MichelinNY.csv", header=TRUE)
+Michelin <- read.table("http://gattonweb.uky.edu/sheather/book/docs/datasets/MichelinFood.txt", header=TRUE)
+```
+
+## Residual Analysis
+- Three types of residuals for logistic regression
+  + Response
+  + Pearson or standardized Pearson residuals
+  + Deviance and standardized deviance residuals
+  
+- Note that residuals are only useful if you have binomial data where the number of trials for response $i$ , $m_i\ge 2$ 
+
+
+## Response Residuals
+
+$$ r_{resp,i} = y_i/m_i - \hat{\theta}(x_i)$$
+- Here $\hat{\theta}(x_i)$ is the ith fitted value from a logistic regression fit.  
+- Since the variance of $y_i/m_i$ is not constant, it can be difficult to assess extremes.
+
+
+## Pearson Residauls
+
+- Just divide each residual by its estimated variance.
+
+$$ r_{Pearson,i} = \frac{y_i/m_i - \hat{\theta}(x_i)}{\sqrt{\hat{\theta}(x_i)(1-\hat{\theta}(x_i)/m_i)}}$$
+- Pearson residuals, when squared sum up to the $\chi^2$ goodness of fit statistic.
+
+$$ \sum_i r^2_{Pearson,i} = \sum_i^n  \frac{(y_i/m_i - \hat{\theta}(x_i))^2}{\hat{\theta}(x_i)(1-\hat{\theta}(x_i)/m_i)} =X^2 $$
+- These residuals don't take into account uncertainty in model estimates, (think confidence intervals for $\hat{\theta}(x_i)$).
+
+## Standardized Pearson Residuals
+
+$$ sr_{Pearson,i} = \frac{(y_i/m_i - \hat{\theta}(x_i))}{\sqrt{(1-h_{ii})\hat{\theta}(x_i)(1-\hat{\theta}(x_i)/m_i)}} = \frac{r_{Pearson,i}}{\sqrt{1-h_{ii}}} $$
+- $h_{ii}$ is the ith diagonal element of the had matrix obtained from a weighted least squares approximation to the MLE.
+
+
+
+## Deviance residuals
+
+- Use the fact that $$sum_i r^2_{Deviance,i} = G^2$$.
+- Recall that $G^2$ is a LR statistic that sums up the individual differences in a binomial likelihood between a model estimate $\hat{\theta}$ and the observed proportions  $y_i/m_i$. 
+- Say that $G^2 = \sum_{i=1}^n g_i^2$ 
+- We need to add a sign term.  If not, all the residuals defined like this would have a positive sign.
+
+$$r_{Deviance,i} =sign(y_i/m_i - \hat{\theta}(x_i)) g_i$$
+- $$ sr_{Deviance,i} = \frac{sr_{Deviance,i}}{\sqrt{1-h_{ii}}} $$
+
+## Michelin-Guide and Food Correlation
+
+```{r}
+## For Michelin fit,
+```{r, echo = FALSE}
+food.fit = glm(cbind(InMichelin,NotInMichelin)~Food,
+               data=Michelin,family=binomial)
+sumary(food.fit)
+```
+
+## Residuals
+
+```{r,echo=FALSE}
+mich.resid = as.data.frame(cbind(Michelin$Food,round(Michelin$InMichelin/Michelin$mi,3),round(food.fit$fitted,3),round(residuals(food.fit,"response"),3),round(residuals(food.fit,"pearson"),3),round(residuals(food.fit,"deviance"),3)))
+names(mich.resid) = c("Food rating", "y/m","fitted","Response Resid","Pearson Resid","Deviance Resid")
+print(mich.resid,row.names=FALSE)
+```
+
+## Plotting Residuals: Old Fashioned Approach
+
+```{r}
+#Figure 8.3 on page 276
+hvalues <- influence(food.fit)$hat
+stanresDeviance <- residuals(food.fit)/sqrt(1-hvalues)
+stanresPearson <- residuals(food.fit,"pearson")/sqrt(1-hvalues)
+par(mfrow=c(1,2))
+plot(Michelin$Food,stanresDeviance,ylab="Standardized Deviance Residuals",xlab="Food Rating",ylim=c(-2,2))
+plot(Michelin$Food,stanresPearson,ylab="Standardized Pearson Residuals",xlab="Food Rating",ylim=c(-2,2))
+```
+
+## Car and Plot Functions Should Work for GLM
+
+```{r}
+par(mfrow=c(2,2))
+plot(food.fit)
+```
+
+## Other Plots
+```{r}
+influenceIndexPlot(food.fit)
+#avPlots(food.fit)
+#influencePlot(food.fit)
+```
+
+## Graphics for Evaluating Model Fit
+
+- Many graphics exist.
+- ROC + AUC 
+- Lift Curves
+- Precision Recall Curves
+- Etc.
+- These curves give you an idea of how well a model performs
+- May also provide insight into thresholds or cutoffs used 
+
+
+## Sensitivity and Specificity 
+- First recognize that there are actual outcomes/events and model predictions/diagnostics.
+
+- Sensitivity or true positive rate, $P(predict=T|event=T)$.
+- Specificity or true negative rate, $P(predict=F|truth=F)$.
+- False Positive Rate(FPR) = 1- Specificity.
+
+## Summary
+- If we call everything an event, we will have a sensitivity of 1 because
+$P(predict=T|event=T)=1$.
+- If we call everything an event, our Specificity will be 0 so our FPR =1.
+- If we want our FPR to be low, we only predict events if we are really certain.
+- A good model achieves a high sensitivity and low FPR at the same time.
+- A bad random model requires us to increase FPR a lot in order to increase sensitivity.
+
+## AUC 
+- Area under the curve (AUC) is an overall measure of the correlation between a binary model prediction and the actual outcomes.  
+- High AUC suggests that the model is good.
+- AUC doesn't generally tell you how to turn model estimates into predictions.
+
+## Thresholds
+- Turn model outputs into predictions
+- Predict an event if estimated probability $\hat{\theta}>\theta_{\star})$ 
+- $\theta_{\star}$ is a threshold determined by the user.
+- Can use $\theta_{\star}=.5$
+- Can use $\theta_{\star} = \sum{y_i}/\sum(m_i)$
+- Can use other rules depending on costs of different types of mistakes.
+
+
+## What is a Lift Curve
+- Popular in financial services and direct marketing.
+- Break up predicted probabilities into segments or ranks, i.e. top 10\%, second 10\%  etc.
+- For each decile, compute the percentage of actual events.
+- Compare the decile percentage to the population percentage through a ratio.
+ + decile 1 = 20\%/2\% = 10 times lift
+ + decile 2 = 15\%/2\% = 7.5 times lift
+- Could also do cumulative calculation, i.e. among the top 3 deciles..
+
+## Bigger data example: neonatal risk.
+
+*Load the data and create training and testing sets.
+```{r}
+load("C:\\Users\\rzaretzk\\Documents\\BZAN540-2015\\NatalRiskData.rData")
+train <- sdata[sdata$ORIGRANDGROUP<=5,] 
+test <- sdata[sdata$ORIGRANDGROUP>5,]
+
+complications <- c("ULD_MECO","ULD_PRECIP","ULD_BREECH")
+riskfactors <- c("URF_DIAB", "URF_CHYPER", "URF_PHYPER", "URF_ECLAM")
+y <- "atRisk" 
+x <- c("PWGT","UPREVIS", "CIG_REC", "GESTREC3", "DPLURAL", complications, riskfactors)
+```
+
+
+#Automatically generate the model formula and fit.
+
+```{r}
+fmla <- paste(y, paste(x, collapse="+"), sep="~")
+print(fmla)
+
+model <- glm(fmla, data=train, family=binomial(link="logit"))
+```
+
+
+## Fitted model predicted probabilities
+```{r}
+train$pred <- predict(model, newdata=train, type="response") 
+test$pred <- predict(model, newdata=test, type="response")
+```
+
+## Stepwise regression to simplify the model and best results.
+
+```{r, echo=FALSE}
+step(model)
+model2 = glm(atRisk ~ PWGT + UPREVIS + CIG_REC + GESTREC3 + DPLURAL + ULD_MECO + ULD_BREECH, data = train,family=binomial)
+
+train$pred2 <- predict(model2, newdata=train, type="response")
+test$pred2 <- predict(model2, newdata=test, type="response")
+```
+
+#MODEL EVALUATION
+* Does the value of the linear predictor differ for the two cases?
+
+```{r}
+ggplot(train, aes(x=pred, color=atRisk, linetype=atRisk)) +
+  geom_density()
+
+ggplot(aes(y = pred, x = factor(atRisk)), data = train) + geom_boxplot() + theme(legend.position = "none")
+```
+#Create a threshold to predict case vs. non-case.
+*Make a variable that has 0-1 predictions instead 
+of probabilities.
+
+```{r}
+threshold = sum(train$atRisk)/length(train$atRisk)
+train$pred01 = 1*(train$pred>threshold)
+train$pred012 = 1*(train$pred2>threshold)
+```
+
+##Make the classifcation table/confusion matrix
+*First variable is "prediction"" which is the left margin 
+of the table.  Second variable is the "actual" shown on the top margin
+
+```{r}
+xtabs(~pred01+atRisk,data=train)
+xtabs(~pred012+atRisk,data=train)
+```
+##Based on the threshold we see lots of False positives.
+
+##ROC Curves allow you to look overall through all of the possible thresholds.  The steeper the line, the better.
+
+```{r}
+par(mfrow=c(1,2))
+library(ROCR)
+pred.roc = prediction(train$pred,train$atRisk)
+perf.roc = performance(pred.roc,"tpr","fpr")
+plot(perf.roc,main="Full Model Curve")
+auc1 = performance(pred.roc,"auc")
+```
+
+## Reduced model
+```{r}
+pred.roc2 = prediction(train$pred2,train$atRisk)
+perf.roc2 = performance(pred.roc2,"tpr","fpr")
+plot(perf.roc2,main="Step Model Curve")
+auc2 = performance(pred.roc2,"auc")
+print(auc2)
+```
+
+## Another Package for ROC
+```{r}
+library(pROC)
+rocCurve=roc(response = train$atRisk,predictor = train$pred2)
+auc(rocCurve)  
+plot(rocCurve,legacy.axes=TRUE)
+ci(rocCurve)
+```
+
+
+## Caret Library Liftcurve
+
+```{r}
+#library(caret)
+#liftCurve = lift(factor(atRisk)~pred2,data=train)
+#xyplot(liftCurve)
+```
+
+## And then a Lift Chart using ROCR
+```{r}
+perf <- performance(pred.roc,"lift","rpp")
+plot(perf, main="lift curve", colorize=T)
+```
+
+## Will a genetic algorithm help?  Try using the GA package.
+
+
+*The fitness function.
+
+```{r}
+library(GA)
+gfull <- model  # model fit above for full variables
+x <- model.matrix(gfull)[, -1] # remove response variable.
+y <- model.response(model.frame(gfull))
+
+fitness <- function(string) {
+     inc <- which(string == 1)
+     X <- cbind(1, x[,inc])
+     mod <- glm.fit(X, y)
+     class(mod) <- "glm"
+    -BIC(mod)
+     }
+
+```
+
+## The GA algorithm, package GA
+```{r}
+GA <- ga("binary", fitness = fitness, nBits = ncol(x), names = colnames(x),monitor=FALSE)
+
+#GA <- ga("binary", fitness = fitness, nBits = ncol(x),popSize = 200,maxiter = 500, names = colnames(x),monitor=FALSE) # Modification if convergence is poor.
+```
+## Plotting Convergence
+```{r}
+plot(GA)
+```
+
+## Summary of Results
+```{r}
+ summary(GA)
+```
+
+
+## Summary of Results 2
+```{r}
+ summary(GA)$solution
+```
+
+## Best fitting model
+```{r}
+Best.fit = glm(at.risk~.,data=data.frame(at.risk = y,x[,GA@solution==1]),family=binomial)
+sumary(Best.fit)
+```
+
+## GLMULTI Package - Description from Journal of Statistical Software
+
+- Builds all possible unique models from a set of variables using glm.
+- Scores the fitted models using AIC, AICc and BIC, or quasi-likelihood.
+- The package is optimized for large candidate sets by avoiding memory limitation, facilitating parallelization
+- Providing, in addition to exhaustive screening, a compiled genetic algorithm method. 
+
+- Will update later.

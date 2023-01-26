@@ -1,0 +1,17 @@
+Therapy,Gender,Response,Count
+S,Female,Pro,4
+S,Female,NoCh,12
+S,Female,ParRem,5
+S,Female,CompRem,2
+S,Male,Pro,28
+S,Male,NoCh,45
+S,Male,ParRem,29
+S,Male,CompRem,26
+A,Female,Pro,12
+A,Female,NoCh,7
+A,Female,ParRem,3
+A,Female,CompRem,1
+A,Male,Pro,41
+A,Male,NoCh,44
+A,Male,ParRem,20
+A,Male,CompRem,20

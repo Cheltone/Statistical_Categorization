@@ -1,0 +1,1467 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={HW3 Chad Melton and Rebecca Brink},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{HW3 Chad Melton and Rebecca Brink}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(epiR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: survival
+\end{verbatim}
+
+\begin{verbatim}
+## Package epiR 1.0-15 is loaded
+\end{verbatim}
+
+\begin{verbatim}
+## Type help(epi.about) for summary information
+\end{verbatim}
+
+\begin{verbatim}
+## Type browseVignettes(package = 'epiR') to learn how to use epiR for applied epidemiological analyses
+\end{verbatim}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(vcdExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: vcd
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: grid
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: gnm
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(vcd)}
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{library}\NormalTok{(lmtest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\hypertarget{section}{%
+\subsection{3.2}\label{section}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+piHat = -0.0003 + 0.0304x and piHat = P\%xi. Now, 0.0304 = 0.01P
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P =}\StringTok{ }\FloatTok{0.0304}\OperatorTok{/}\FloatTok{0.01}
+\NormalTok{P}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.04
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{piHat =}\StringTok{ }\FloatTok{0.0079}
+\NormalTok{xi =}\StringTok{ }\FloatTok{0.0774}
+\NormalTok{Pi =}\StringTok{ }\NormalTok{xi}\OperatorTok{*}\FloatTok{0.0304-0.0003}
+\NormalTok{Pi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.00205296
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rat =}\StringTok{ }\NormalTok{piHat}\OperatorTok{/}\NormalTok{Pi}
+\NormalTok{rat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.848102
+\end{verbatim}
+
+This calculation suggests that the value of Pii (0.0079) is an outlier
+in the data because the 3.8\textgreater\textgreater0.0079.
+
+\hypertarget{section-1}{%
+\subsection{3.3}\label{section-1}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+From the model selected we know that the equation follows the form
+\(\pi \hat =\) intercept +parameter coefficient * parameter. From the
+table given, we can see that the prediction equation is:
+\[ \hat \pi  =0.00255 +0.00109x  \] where x is the alcohol consumption.
+The intercept of this equation means that the probability of a child
+having sex organ malformation without the influence of alcohol is only
+about 0.00255. This increases as a rate of 0.00109 which means that the
+probability of sex organ malformation doubles with every increase of 2
+in alcohol consumption.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+First step in computing the relative risk is to calculate the
+probability of malformation at each alcohol level. Do this by plugging
+in 0 and 7 for x.
+
+For \(x=0\) we have \(\hat \pi_0 = 0.00255 +0.00109(0) =0.00255\) and
+
+For \(x=7\) we have \(\hat \pi_7 = 0.00255 +0.00109(7)=0.01018\).
+
+The relative risk is then
+\(\frac{\hat\pi_7}{\hat \pi_0}=\frac{0.01018}{0.00255}=4.0\)
+
+\hypertarget{section-2}{%
+\subsection{3.4}\label{section-2}}
+
+To set up this problem, we first have to find a linear model that
+satisfies the conditions set up in problem 3.3. Our model may be
+slightly different as teh text book used SAS and we are using R. We have
+also opted to only use the percentage of arrests data so our numbers are
+different. This first linear model is set up by the code below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumption=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{1.5}\NormalTok{,}\FloatTok{4.0}\NormalTok{,}\FloatTok{7.0}\NormalTok{)}
+\NormalTok{percentage=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.0028}\NormalTok{,}\FloatTok{0.0026}\NormalTok{,}\FloatTok{0.0063}\NormalTok{,}\FloatTok{0.0079}\NormalTok{,}\FloatTok{0.0263}\NormalTok{)}
+\NormalTok{data1=}\KeywordTok{data.frame}\NormalTok{(consumption,percentage)}
+\NormalTok{data1.model=}\KeywordTok{lm}\NormalTok{(percentage}\OperatorTok{~}\NormalTok{consumption,}\DataTypeTok{data=}\NormalTok{data1)}
+\KeywordTok{summary}\NormalTok{(data1.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = percentage ~ consumption, data = data1)
+## 
+## Residuals:
+##          1          2          3          4          5 
+##  1.884e-03  9.451e-05  6.162e-04 -5.730e-03  3.135e-03 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) 0.0009163  0.0024944   0.367   0.7377  
+## consumption 0.0031783  0.0006789   4.682   0.0184 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.003941 on 3 degrees of freedom
+## Multiple R-squared:  0.8796, Adjusted R-squared:  0.8395 
+## F-statistic: 21.92 on 1 and 3 DF,  p-value: 0.01841
+\end{verbatim}
+
+This model is assumed to be our baseline.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+To see if the result is sensitive to the final data point where the
+percentage of the malformations is an order of magnitude higher due to
+only one malformation, we re-fit the same model assuming no
+malformations in this category. This is set up below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumption2=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{1.5}\NormalTok{,}\FloatTok{4.0}\NormalTok{,}\FloatTok{7.0}\NormalTok{)}
+\NormalTok{percentage2=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.0028}\NormalTok{,}\FloatTok{0.0026}\NormalTok{,}\FloatTok{0.0063}\NormalTok{,}\FloatTok{0.0079}\NormalTok{,}\FloatTok{0.0000}\NormalTok{)}
+\NormalTok{data2=}\KeywordTok{data.frame}\NormalTok{(consumption2,percentage)}
+\NormalTok{data2.model=}\KeywordTok{lm}\NormalTok{(percentage2}\OperatorTok{~}\NormalTok{consumption2,}\DataTypeTok{data=}\NormalTok{data2)}
+\KeywordTok{summary}\NormalTok{(data2.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = percentage2 ~ consumption2, data = data2)
+## 
+## Residuals:
+##         1         2         3         4         5 
+## -0.001784 -0.001857  0.002099  0.004338 -0.002796 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   0.0045843  0.0022427   2.044    0.134
+## consumption2 -0.0002555  0.0006104  -0.419    0.704
+## 
+## Residual standard error: 0.003543 on 3 degrees of freedom
+## Multiple R-squared:  0.05518,    Adjusted R-squared:  -0.2598 
+## F-statistic: 0.1752 on 1 and 3 DF,  p-value: 0.7037
+\end{verbatim}
+
+The intercept for the model is about 4 times higher, but more
+importantly the effect of alcohol consumption in the model is negative.
+This would imply that drinking more alcohol reduces the chance of
+malfomation in newborns. I am no pediatrics researcher, but I am pretty
+sure that shouldn't be the case. This means that the one malformation we
+see at the largest alcohol consumption rate is an important data point
+to the dataset.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+We again try to see the sensitivity of the model, but this time to the
+values of scores. If we change the values of the scores, we expect the
+intercept to remain fairly constant and the parameter coefficeint to
+shift slightly. We set up this model in the code below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumption3=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)}
+\NormalTok{percentage=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.0028}\NormalTok{,}\FloatTok{0.0026}\NormalTok{,}\FloatTok{0.0063}\NormalTok{,}\FloatTok{0.0079}\NormalTok{,}\FloatTok{0.0263}\NormalTok{)}
+\NormalTok{data3=}\KeywordTok{data.frame}\NormalTok{(consumption3,percentage)}
+\NormalTok{data3.model=}\KeywordTok{glm}\NormalTok{(percentage}\OperatorTok{~}\NormalTok{consumption3,}\DataTypeTok{data=}\NormalTok{data2,)}
+\KeywordTok{summary}\NormalTok{(data3.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = percentage ~ consumption3, data = data2)
+## 
+## Deviance Residuals: 
+##        1         2         3         4         5  
+##  0.00408  -0.00135  -0.00288  -0.00651   0.00666  
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  -0.001280   0.004764  -0.269   0.8056  
+## consumption3  0.005230   0.001945   2.689   0.0745 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 3.7833e-05)
+## 
+##     Null deviance: 0.00038703  on 4  degrees of freedom
+## Residual deviance: 0.00011350  on 3  degrees of freedom
+## AIC: -33.276
+## 
+## Number of Fisher Scoring iterations: 2
+\end{verbatim}
+
+We see that our parameter coefficient shifted by an order of magnitude.
+This seems to be a large jump for a max change of scores from 7 to 4,
+however when we look at the intercept it makes sense that the
+coefficeint changed that much. The intercept is negative. This means
+that not drinking any alcohol should lower the risk of drinking past
+zero and ensure no malformations in newborns. This does not make logical
+sense. A model of this data set is dependent on accurate values of the
+number of drinks consumed and the proportions of malformations at every
+level regardless of how high.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Below is the code to fit the required model.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumption=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{1.5}\NormalTok{,}\FloatTok{4.0}\NormalTok{,}\FloatTok{7.0}\NormalTok{)}
+\NormalTok{percentage=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.0028}\NormalTok{,}\FloatTok{0.0026}\NormalTok{,}\FloatTok{0.0063}\NormalTok{,}\FloatTok{0.0079}\NormalTok{,}\FloatTok{0.0263}\NormalTok{)}
+\NormalTok{data4=}\KeywordTok{data.frame}\NormalTok{(consumption,percentage)}
+\NormalTok{data4.model=}\KeywordTok{glm}\NormalTok{(percentage}\OperatorTok{~}\NormalTok{consumption,}\DataTypeTok{data=}\NormalTok{data4, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"probit"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(data4.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = percentage ~ consumption, family = binomial(link = "probit"), 
+##     data = data4)
+## 
+## Deviance Residuals: 
+##         1          2          3          4          5  
+##  0.002670  -0.010808   0.024748  -0.025364   0.007384  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)
+## (Intercept)  -2.7868     3.4482  -0.808    0.419
+## consumption   0.1185     0.6698   0.177    0.860
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 0.0354303  on 4  degrees of freedom
+## Residual deviance: 0.0014343  on 3  degrees of freedom
+## AIC: 4.0926
+## 
+## Number of Fisher Scoring iterations: 8
+\end{verbatim}
+
+This should follow the equation: Probit(PiHat = -2.7860 +0.0614x.
+
+\hypertarget{section-3}{%
+\subsection{3.13}\label{section-3}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{crab =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{chadm}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{OneDrive}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Documents}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{StatsData}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{crab.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{crab.model =}\StringTok{ }\KeywordTok{glm}\NormalTok{(satell}\OperatorTok{~}\NormalTok{weight,}\DataTypeTok{data=}\NormalTok{crab,}\DataTypeTok{family =} \KeywordTok{poisson}\NormalTok{(}\DataTypeTok{link =}\StringTok{"log"}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(crab.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = satell ~ weight, family = poisson(link = "log"), 
+##     data = crab)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.9307  -1.9981  -0.5627   0.9298   4.9992  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -0.42841    0.17893  -2.394   0.0167 *  
+## weight       0.58930    0.06502   9.064   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 632.79  on 172  degrees of freedom
+## Residual deviance: 560.87  on 171  degrees of freedom
+## AIC: 920.16
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+The equation is: log(muHat) = -0.42841 + 0.58930x
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x=}\FloatTok{2.44}
+
+\NormalTok{muHat =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\FloatTok{0.42841} \OperatorTok{+}\StringTok{ }\FloatTok{0.58930}\OperatorTok{*}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+The mean Y for female crabs of average weight 2.44 kg is 2.744179.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{confint}\NormalTok{(crab.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Waiting for profiling to be done...
+\end{verbatim}
+
+\begin{verbatim}
+##                  2.5 %      97.5 %
+## (Intercept) -0.7771762 -0.07591025
+## weight       0.4597002  0.71449835
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ciLow =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\FloatTok{0.4597}\NormalTok{)}
+\NormalTok{ciHi =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\FloatTok{0.7167}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The CI for muHat is (1.583599, 2.047665).
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{waldtest}\NormalTok{(crab.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Wald test
+## 
+## Model 1: satell ~ weight
+## Model 2: satell ~ 1
+##   Res.Df Df      F    Pr(>F)    
+## 1    171                        
+## 2    172 -1 82.155 2.856e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+The Wald test provides a value of 82.155 and one degree of freedom.
+Here, the P-Value is also \textasciitilde0 which suggest that there is
+very strong evidence to reject the null hypothesis and shows that weight
+is significant.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{4}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lrtest}\NormalTok{ (crab.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Likelihood ratio test
+## 
+## Model 1: satell ~ weight
+## Model 2: satell ~ 1
+##   #Df  LogLik Df  Chisq Pr(>Chisq)    
+## 1   2 -458.08                         
+## 2   1 -494.04 -1 71.925  < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+The likelihood ratio tests provides a value of 71.295. Again, these
+results suggest strong evidence to reject the null hypothesis.
+
+\hypertarget{section-4}{%
+\subsection{3.14}\label{section-4}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{crab.model2 =}\StringTok{ }\KeywordTok{glm.nb}\NormalTok{(satell}\OperatorTok{~}\NormalTok{weight,}\DataTypeTok{data=}\NormalTok{crab)}
+\KeywordTok{summary}\NormalTok{(crab.model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm.nb(formula = satell ~ weight, data = crab, init.theta = 0.9310592338, 
+##     link = log)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8394  -1.4122  -0.3247   0.4744   2.1279  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -0.8647     0.4048  -2.136   0.0327 *  
+## weight        0.7603     0.1578   4.817 1.45e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for Negative Binomial(0.9311) family taken to be 1)
+## 
+##     Null deviance: 216.43  on 172  degrees of freedom
+## Residual deviance: 196.16  on 171  degrees of freedom
+## AIC: 754.64
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  0.931 
+##           Std. Err.:  0.168 
+## 
+##  2 x log-likelihood:  -748.644
+\end{verbatim}
+
+The equation for the neg binomial model is log(mu2) = -0.8647 + 0.7603x.
+Here, the dispersion parameter is 0.931 with a standard error of 0.168.
+Also, the ratio of the residual deviance to df is \textasciitilde{} 1.15
+(overdispersion but not drastic). These values suggest that the neg
+binomial model is a better fit for these data.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{confint}\NormalTok{(crab.model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Waiting for profiling to be done...
+\end{verbatim}
+
+\begin{verbatim}
+##                  2.5 %      97.5 %
+## (Intercept) -1.7542558 0.007184686
+## weight       0.4207032 1.113666186
+\end{verbatim}
+
+The confidence interval is (0.4207032, 1.113666186).The interval range
+is wider for the neg binomial model due to the existance of the
+parameter that deals with overdispersion in model.
+
+\hypertarget{section-5}{%
+\subsection{3.18}\label{section-5}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  We first consider dimensions. The expected value of Y in this case
+  should be the number of arrests. \mu is the rate of arrests {[}number
+  of arrests / 1000 fans{]} and t in the number of fans {[}in
+  thousands{]} this means that if \(E[Y]=\mu t\) we get the number of
+  arrests expected at a game. If we solve for \mu then we get
+  \(\mu=E[Y]/t\) which gives us the rate of arrests. This number should
+  be an integer greater than 0. \(log(E[Y]/t)=log(\mu)\) would help us
+  to enforce the positive parameter. Let us denote \(log(\mu)=\alpha\).
+  In R, this is expressed as:
+  glm(Arrests\textasciitilde1+offset(log(Attendance)),data=soccer,family=poisson(link=``log''))
+\item
+  The model for the problem is set up below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{soccer =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{chadm}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{OneDrive}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Desktop}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Fall_2020}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{STATS 578}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{HW}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{soccer.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{View}\NormalTok{(soccer)}
+\NormalTok{soccer.model=}\KeywordTok{glm}\NormalTok{(Arrests}\OperatorTok{~}\DecValTok{1}\OperatorTok{+}\KeywordTok{offset}\NormalTok{(}\KeywordTok{log}\NormalTok{(Attendance)),}\DataTypeTok{data=}\NormalTok{soccer,}\DataTypeTok{family=}\KeywordTok{poisson}\NormalTok{(}\DataTypeTok{link=}\StringTok{"log"}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(soccer.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Arrests ~ 1 + offset(log(Attendance)), family = poisson(link = "log"), 
+##     data = soccer)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -12.789   -3.426   -0.938    3.079   10.137  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -0.91028    0.02164  -42.07   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 669.45  on 22  degrees of freedom
+## Residual deviance: 669.45  on 22  degrees of freedom
+## AIC: 812.62
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+Our value of \alpha is -0.91028 which leads to a
+\(\hat \mu = e^\alpha =e^{-0.91028}=0.40241\). This rate is the
+estimated arrests per thousands of fans attending.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The graphs are produced according to the code below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{attend.sort=}\KeywordTok{order}\NormalTok{(soccer}\OperatorTok{$}\NormalTok{Attendance)}
+\KeywordTok{plot}\NormalTok{(soccer}\OperatorTok{$}\NormalTok{Arrests}\OperatorTok{~}\NormalTok{soccer}\OperatorTok{$}\NormalTok{Attendance,}\DataTypeTok{pch=}\DecValTok{3}\NormalTok{,}\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(soccer.model}\OperatorTok{$}\NormalTok{fitted.values[attend.sort]}\OperatorTok{~}\NormalTok{soccer}\OperatorTok{$}\NormalTok{Attendance[attend.sort],}\DataTypeTok{pch=}\DecValTok{2}\NormalTok{,}\DataTypeTok{col=}\StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+Using residuals, Aston Villa and Bournemouth are both teams that had an
+unexpectedly high arrest rate. Manchester City, Plymouth, Reading, and
+Hull City all have lower than expected arrest rates.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  We first set up the model as shown in the code below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{soccer.model2=}\KeywordTok{glm.nb}\NormalTok{(Arrests}\OperatorTok{~}\DecValTok{1}\OperatorTok{+}\KeywordTok{offset}\NormalTok{(}\KeywordTok{log}\NormalTok{(Attendance)),}\DataTypeTok{data=}\NormalTok{soccer)}
+\KeywordTok{summary}\NormalTok{(soccer.model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm.nb(formula = Arrests ~ 1 + offset(log(Attendance)), data = soccer, 
+##     init.theta = 3.135631071, link = log)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2049  -0.7464  -0.1857   0.6129   1.5568  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -0.9052     0.1200  -7.546 4.49e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for Negative Binomial(3.1356) family taken to be 1)
+## 
+##     Null deviance: 24.15  on 22  degrees of freedom
+## Residual deviance: 24.15  on 22  degrees of freedom
+## AIC: 244.24
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  3.136 
+##           Std. Err.:  0.920 
+## 
+##  2 x log-likelihood:  -240.236
+\end{verbatim}
+
+This model has an \alpha of -0.9052 with a standard error of 0.1200.
+This is very similar to the previous poisson model where \alpha was
+-0.91028 witha standard error of 0.02164. The standard error in the
+negative binomial model has a larger deviation than that of the poisson
+model. Therefore, the Poisson does not support sufficient variability.
+
+\hypertarget{section-6}{%
+\subsection{3.20}\label{section-6}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+We use the code below to format the data and calculate the sample
+coronary death rates as requested. The plots of the outputs are shown
+below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Age =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{80}\NormalTok{)}
+\NormalTok{Smoke =}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Y"}\NormalTok{,}\StringTok{"N"}\NormalTok{),}\DecValTok{5}\NormalTok{)}
+\NormalTok{PersonYrs =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{52407}\NormalTok{,}\DecValTok{18793}\NormalTok{,}\DecValTok{43248}\NormalTok{,}\DecValTok{10673}\NormalTok{,}\DecValTok{28612}\NormalTok{,}\DecValTok{5710}\NormalTok{,}\DecValTok{12663}\NormalTok{,}\DecValTok{2585}\NormalTok{,}\DecValTok{5317}\NormalTok{,}\DecValTok{1462}\NormalTok{)}
+\NormalTok{Deaths =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{32}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{104}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{206}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{186}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{102}\NormalTok{,}\DecValTok{31}\NormalTok{)}
+
+\NormalTok{smoking =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(Age,Smoke,PersonYrs,Deaths)}
+\NormalTok{smoking}\OperatorTok{$}\NormalTok{Smoker=}\DecValTok{0}
+\NormalTok{smoking}\OperatorTok{$}\NormalTok{Smoker[Smoke}\OperatorTok{==}\StringTok{"Y"}\NormalTok{] =}\StringTok{ }\DecValTok{1}
+\NormalTok{smoking}\OperatorTok{$}\NormalTok{logPersonYrs =}\StringTok{ }\KeywordTok{log}\NormalTok{(smoking}\OperatorTok{$}\NormalTok{PersonYrs}\OperatorTok{/}\DecValTok{1000}\NormalTok{);}
+\NormalTok{smoking}\OperatorTok{$}\NormalTok{Rate =}\StringTok{ }\NormalTok{smoking}\OperatorTok{$}\NormalTok{Deaths}\OperatorTok{/}\NormalTok{(smoking}\OperatorTok{$}\NormalTok{PersonYrs}\OperatorTok{/}\DecValTok{1000}\NormalTok{);}
+\NormalTok{smoking}\OperatorTok{$}\NormalTok{Age2 =smoking}\OperatorTok{$}\NormalTok{Age  }\CommentTok{#use this for part c?;}
+
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{qplot}\NormalTok{(Age,Rate, }\DataTypeTok{data =}\NormalTok{ smoking, }\DataTypeTok{shape =}\NormalTok{ Smoke)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Ratio Plot}
+
+\NormalTok{nSmk =}\StringTok{ }\NormalTok{smoking[smoking}\OperatorTok{$}\NormalTok{Smoke}\OperatorTok{==}\StringTok{"N"}\NormalTok{,]}
+\NormalTok{Smk =}\StringTok{ }\NormalTok{smoking[smoking}\OperatorTok{$}\NormalTok{Smoke}\OperatorTok{==}\StringTok{"Y"}\NormalTok{,]}
+\NormalTok{Smk}\OperatorTok{$}\NormalTok{Ns.rate =}\StringTok{ }\NormalTok{nSmk}\OperatorTok{$}\NormalTok{Rate}
+\NormalTok{Smk}\OperatorTok{$}\NormalTok{Ratio =}\StringTok{ }\NormalTok{Smk}\OperatorTok{$}\NormalTok{Rate}\OperatorTok{/}\NormalTok{Smk}\OperatorTok{$}\NormalTok{Ns.rate  }\CommentTok{#smoking coronary death rate/non-smoking death rate.}
+
+\KeywordTok{qplot}\NormalTok{(Age,Ratio, }\DataTypeTok{data =}\NormalTok{ Smk)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-18-2.pdf}
+
+We can see in these figures that the ratio of heart attacks between
+smokers and nonsmokers is highly nonlinear. The ratio of younger smokers
+to younger non-smokers who have heart attacks is much higher than the
+ratio of older smokers to older non-smokers. This could be because as
+shown in the first plot, the rate of heart attack is much higher for
+people in their 80's. This is clearly a variable relationship.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+We want a poisson model that has a total of six parameters. The equation
+that we are asked for comes in the form:
+
+loga(μ/t)= β\_0+ β\_S I(Smoker=Yes)+β\_(Age=40) I(Age=40)+β\_(Age=50)
+I(Age=50)+β\_(Age=60) I(Age=60)+β\_(Age=70) I(Age=70)
+
+This model is set up by the code shown below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.factor}\NormalTok{(smoking}\OperatorTok{$}\NormalTok{Smoke)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.factor}\NormalTok{(smoking}\OperatorTok{$}\NormalTok{Age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{partb =}\StringTok{ }\KeywordTok{glm}\NormalTok{(Deaths }\OperatorTok{~}\StringTok{ }\KeywordTok{factor}\NormalTok{(Age)}\OperatorTok{+}\NormalTok{Smoke}\OperatorTok{+}\KeywordTok{offset}\NormalTok{(logPersonYrs),}\DataTypeTok{data=}\NormalTok{smoking,}\DataTypeTok{family=}\KeywordTok{poisson}\NormalTok{(}\DataTypeTok{link=}\StringTok{"log"}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(partb)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Deaths ~ factor(Age) + Smoke + offset(logPersonYrs), 
+##     family = poisson(link = "log"), data = smoking)
+## 
+## Deviance Residuals: 
+##        1         2         3         4         5         6         7         8  
+##  0.90176  -2.18005   0.51036  -1.30797   0.05133  -0.13786  -0.08734   0.22886  
+##        9        10  
+## -0.91239   1.91906  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)    -1.0116     0.1918  -5.275 1.32e-07 ***
+## factor(Age)50   1.4840     0.1951   7.606 2.82e-14 ***
+## factor(Age)60   2.6275     0.1837  14.301  < 2e-16 ***
+## factor(Age)70   3.3505     0.1848  18.131  < 2e-16 ***
+## factor(Age)80   3.7001     0.1922  19.250  < 2e-16 ***
+## SmokeY          0.3545     0.1074   3.302  0.00096 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 935.091  on 9  degrees of freedom
+## Residual deviance:  12.134  on 4  degrees of freedom
+## AIC: 79.202
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{deviance}\NormalTok{(partb)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12.13391
+\end{verbatim}
+
+From the equation, we can see that there is only one term of smoking vs
+not and the rest of the terms are age dependant. This means that there
+is only one place our model considers smoking or not, and age is not a
+factor in smoking or risk from smoking. Considering the fact that we
+determined that the risk of heart attack from smoking was not linear in
+regards to age, this model would not be appropriate. This model would be
+appropriate if the risk of smoking was constant and compounded by the
+risk of heart attack correlated with age. The mathmatical way of showing
+this model to be insufficent is to consider loga((μ\_s/t)/(μ\_NS/t).
+This shows the averae risk of smokers to nonsmokers. In our selected
+model this becomes: loga((μ\_s/t)/(μ\_NS/t))=loga(μ\_s/t)-loga(μ\_NS/t)=
+(β\_0+ β\_S+β\_(Age=x) ) -(β\_0+β\_(Age=x) )=β\_S
+
+which means the risk is only a function of smoking and not a function of
+age at all.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+We can see clearly from the plots in the first part of the problem that
+the relationship between smoking and age is not linear and that heart
+attack rates are dependent on both factors. Instead of a model with an
+additive relationship between age and smoking, it may be more beneficial
+to try a multiplicative relationship so that the ratio can change
+according to age. This is shown by the equation:
+
+loga(μ/t)= β\_0+ β\_1 * I(Smoker=Yes)+β\_2 Age +β\_3 Age * I(Smoker=Yes)
+
+When we take the same log ratio, loga((μ\_s/t)/(μ\_NS/t), we now get the
+equation:
+
+loga((μ\_s/t)/(μ\_NS/t))=loga(μ\_s/t)-loga(μ\_NS/t)= (β\_0+ β\_S+β\_Age
+Age+β\_(A * S) Age)-(β\_0+β\_Age Age)=β\_S+β\_(A*S) Age
+
+This makes much more sense as the final risk is a factor of both age and
+smoking habit. It also is simplified as there is now only one factor
+concerning age. The below code sets up this model and prints the summary
+showing the parameters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{partc =}\StringTok{ }\KeywordTok{glm}\NormalTok{(Deaths }\OperatorTok{~}\StringTok{ }\NormalTok{Age}\OperatorTok{+}\NormalTok{Smoke}\OperatorTok{+}\NormalTok{Age}\OperatorTok{*}\NormalTok{Smoke}\OperatorTok{+}\KeywordTok{offset}\NormalTok{(logPersonYrs),}\DataTypeTok{data=}\NormalTok{smoking,}\DataTypeTok{family=}\KeywordTok{poisson}\NormalTok{())}
+\KeywordTok{summary}\NormalTok{(partc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Deaths ~ Age + Smoke + Age * Smoke + offset(logPersonYrs), 
+##     family = poisson(), data = smoking)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.8784  -2.1219  -0.2482   1.7184   3.5269  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -5.099946   0.530729  -9.609  < 2e-16 ***
+## Age          0.104685   0.007743  13.520  < 2e-16 ***
+## SmokeY       2.030674   0.568577   3.572 0.000355 ***
+## Age:SmokeY  -0.024899   0.008359  -2.979 0.002894 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 935.091  on 9  degrees of freedom
+## Residual deviance:  59.895  on 6  degrees of freedom
+## AIC: 122.96
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{deviance}\NormalTok{(partc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 59.89526
+\end{verbatim}
+
+Looking at this model, and comparing it to the model in b, we note
+several important things. The first is the deviance. In terms of
+deviance, the model in b performs better. This is in part because we did
+not treate age as a categorical value in the model above but instead
+treated it as a continous variable. Logically, the model presented here
+makes sense as the risk of heart attack goes up with age and initially
+increases with smoking but then the smokng affect lessens as the age
+range increases. Since our problem is one of data structure, we could
+create a hybrid model with the original model but add the single
+quantitaitive model for age and smoking. This is set up in R code below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{partd =}\StringTok{ }\KeywordTok{glm}\NormalTok{(Deaths }\OperatorTok{~}\StringTok{ }\KeywordTok{factor}\NormalTok{(Age)}\OperatorTok{+}\NormalTok{Smoke}\OperatorTok{+}\NormalTok{Age}\OperatorTok{*}\NormalTok{Smoke}\OperatorTok{+}\KeywordTok{offset}\NormalTok{(logPersonYrs),}\DataTypeTok{data=}\NormalTok{smoking,}\DataTypeTok{family=}\KeywordTok{poisson}\NormalTok{())}
+\KeywordTok{summary}\NormalTok{(partd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = Deaths ~ factor(Age) + Smoke + Age * Smoke + offset(logPersonYrs), 
+##     family = poisson(), data = smoking)
+## 
+## Deviance Residuals: 
+##        1         2         3         4         5         6         7         8  
+##  0.27124  -0.87753  -0.06894   0.20752  -0.21865   0.62006   0.17544  -0.43806  
+##        9        10  
+## -0.00332   0.00603  
+## 
+## Coefficients: (1 not defined because of singularities)
+##                Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)   -1.677891   0.304983  -5.502 3.76e-08 ***
+## factor(Age)50  1.734570   0.213251   8.134 4.16e-16 ***
+## factor(Age)60  3.148363   0.253346  12.427  < 2e-16 ***
+## factor(Age)70  4.142029   0.319253  12.974  < 2e-16 ***
+## factor(Age)80  4.730990   0.383962  12.322  < 2e-16 ***
+## SmokeY         2.371211   0.657595   3.606 0.000311 ***
+## Age                  NA         NA      NA       NA    
+## SmokeY:Age    -0.030874   0.009726  -3.174 0.001502 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 935.0909  on 9  degrees of freedom
+## Residual deviance:   1.5464  on 3  degrees of freedom
+## AIC: 70.614
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{deviance}\NormalTok{(partd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.546438
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\item
+\end{enumerate}
+
+This section says to compare the models in parts b and c.~Some of this
+discussion can be found in part c, so we pick up discussing the hybrid
+model that we programmed. In this model, there are 10 coefficients
+present as displayed above. This means that the model is directly
+modeling all 10 observations. This model will give us good results, but
+is most likely overfit.
+
+\hypertarget{problem-2}{%
+\subsection{Problem 2}\label{problem-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Pos =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{chadm}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{OneDrive}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Desktop}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Fall_2020}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{STATS 578}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{HW}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dvisits.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Pos.model =}\StringTok{ }\KeywordTok{glm}\NormalTok{(doctorco }\OperatorTok{~}\StringTok{ }\NormalTok{sex }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{agesq }\OperatorTok{+}\StringTok{ }\NormalTok{income }\OperatorTok{+}\StringTok{ }\NormalTok{levyplus }\OperatorTok{+}\StringTok{ }\NormalTok{freepoor }\OperatorTok{+}\StringTok{ }\NormalTok{freerepa }\OperatorTok{+}\StringTok{ }\NormalTok{illness }\OperatorTok{+}\StringTok{ }\NormalTok{actdays }\OperatorTok{+}\StringTok{ }\NormalTok{hscore }\OperatorTok{+}\StringTok{ }\NormalTok{chcond1 }\OperatorTok{+}\StringTok{ }\NormalTok{chcond2, }\DataTypeTok{family=}\NormalTok{poisson, }\DataTypeTok{data =}\NormalTok{ Pos)}
+\NormalTok{Pos.model}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = doctorco ~ sex + age + agesq + income + levyplus + 
+##     freepoor + freerepa + illness + actdays + hscore + chcond1 + 
+##     chcond2, family = poisson, data = Pos)
+## 
+## Coefficients:
+## (Intercept)          sex          age        agesq       income     levyplus  
+##    -2.22385      0.15688      1.05630     -0.84870     -0.20532      0.12319  
+##    freepoor     freerepa      illness      actdays       hscore      chcond1  
+##    -0.44006      0.07980      0.18695      0.12685      0.03008      0.11409  
+##     chcond2  
+##     0.14116  
+## 
+## Degrees of Freedom: 5189 Total (i.e. Null);  5177 Residual
+## Null Deviance:       5635 
+## Residual Deviance: 4380  AIC: 6737
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(Pos.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = doctorco ~ sex + age + agesq + income + levyplus + 
+##     freepoor + freerepa + illness + actdays + hscore + chcond1 + 
+##     chcond2, family = poisson, data = Pos)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.9170  -0.6862  -0.5743  -0.4839   5.7005  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -2.223848   0.189816 -11.716   <2e-16 ***
+## sex          0.156882   0.056137   2.795   0.0052 ** 
+## age          1.056299   1.000780   1.055   0.2912    
+## agesq       -0.848704   1.077784  -0.787   0.4310    
+## income      -0.205321   0.088379  -2.323   0.0202 *  
+## levyplus     0.123185   0.071640   1.720   0.0855 .  
+## freepoor    -0.440061   0.179811  -2.447   0.0144 *  
+## freerepa     0.079798   0.092060   0.867   0.3860    
+## illness      0.186948   0.018281  10.227   <2e-16 ***
+## actdays      0.126846   0.005034  25.198   <2e-16 ***
+## hscore       0.030081   0.010099   2.979   0.0029 ** 
+## chcond1      0.114085   0.066640   1.712   0.0869 .  
+## chcond2      0.141158   0.083145   1.698   0.0896 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 5634.8  on 5189  degrees of freedom
+## Residual deviance: 4379.5  on 5177  degrees of freedom
+## AIC: 6737.1
+## 
+## Number of Fisher Scoring iterations: 6
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+\end{enumerate}
+
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-24-2.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-24-3.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-24-4.pdf}
+
+The line patterns in these data are due to the fact that the data are
+discrete.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{step}\NormalTok{(Pos.model, }\DataTypeTok{direction=}\StringTok{"backward"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=6737.08
+## doctorco ~ sex + age + agesq + income + levyplus + freepoor + 
+##     freerepa + illness + actdays + hscore + chcond1 + chcond2
+## 
+##            Df Deviance    AIC
+## - agesq     1   4380.1 6735.7
+## - freerepa  1   4380.3 6735.8
+## - age       1   4380.6 6736.2
+## <none>          4379.5 6737.1
+## - chcond2   1   4382.4 6738.0
+## - chcond1   1   4382.5 6738.0
+## - levyplus  1   4382.5 6738.1
+## - income    1   4385.0 6740.5
+## - freepoor  1   4386.2 6741.8
+## - sex       1   4387.4 6743.0
+## - hscore    1   4388.1 6743.7
+## - illness   1   4481.8 6837.4
+## - actdays   1   4917.1 7272.7
+## 
+## Step:  AIC=6735.7
+## doctorco ~ sex + age + income + levyplus + freepoor + freerepa + 
+##     illness + actdays + hscore + chcond1 + chcond2
+## 
+##            Df Deviance    AIC
+## - freerepa  1   4381.0 6734.5
+## <none>          4380.1 6735.7
+## - age       1   4383.0 6736.5
+## - chcond1   1   4383.2 6736.8
+## - levyplus  1   4383.3 6736.9
+## - chcond2   1   4383.5 6737.0
+## - income    1   4385.0 6738.6
+## - freepoor  1   4386.8 6740.4
+## - sex       1   4388.0 6741.5
+## - hscore    1   4389.1 6742.7
+## - illness   1   4481.9 6835.4
+## - actdays   1   4917.1 7270.7
+## 
+## Step:  AIC=6734.53
+## doctorco ~ sex + age + income + levyplus + freepoor + illness + 
+##     actdays + hscore + chcond1 + chcond2
+## 
+##            Df Deviance    AIC
+## <none>          4381.0 6734.5
+## - levyplus  1   4383.4 6735.0
+## - chcond1   1   4384.3 6735.9
+## - chcond2   1   4384.7 6736.3
+## - income    1   4386.7 6738.2
+## - age       1   4387.1 6738.7
+## - freepoor  1   4389.1 6740.6
+## - sex       1   4389.5 6741.0
+## - hscore    1   4390.2 6741.8
+## - illness   1   4482.7 6834.2
+## - actdays   1   4917.6 7269.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = doctorco ~ sex + age + income + levyplus + freepoor + 
+##     illness + actdays + hscore + chcond1 + chcond2, family = poisson, 
+##     data = Pos)
+## 
+## Coefficients:
+## (Intercept)          sex          age       income     levyplus     freepoor  
+##    -2.08906      0.16200      0.35513     -0.19981      0.08369     -0.46960  
+##     illness      actdays       hscore      chcond1      chcond2  
+##     0.18610      0.12661      0.03112      0.12110      0.15889  
+## 
+## Degrees of Freedom: 5189 Total (i.e. Null);  5179 Residual
+## Null Deviance:       5635 
+## Residual Deviance: 4381  AIC: 6735
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\item
+\end{enumerate}
+
+This model suggests an elderly person would visit more frequently than
+other types of people
+
+\#e)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(Pos.model, Pos[}\DecValTok{1}\NormalTok{,], }\DataTypeTok{type=}\StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1 
+## 0.3127869
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{0}\OperatorTok{:}\DecValTok{10}\NormalTok{) \{}
+  \KeywordTok{print}\NormalTok{ (}\StringTok{"Doctor visits = "}\NormalTok{)}
+  \KeywordTok{print}\NormalTok{(i)}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{dpois}\NormalTok{(i, }\DataTypeTok{lambda =} \FloatTok{0.153}\NormalTok{))}
+  
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Doctor visits = "
+## [1] 0
+## [1] 0.8581297
+## [1] "Doctor visits = "
+## [1] 1
+## [1] 0.1312938
+## [1] "Doctor visits = "
+## [1] 2
+## [1] 0.01004398
+## [1] "Doctor visits = "
+## [1] 3
+## [1] 0.0005122429
+## [1] "Doctor visits = "
+## [1] 4
+## [1] 1.959329e-05
+## [1] "Doctor visits = "
+## [1] 5
+## [1] 5.995548e-07
+## [1] "Doctor visits = "
+## [1] 6
+## [1] 1.528865e-08
+## [1] "Doctor visits = "
+## [1] 7
+## [1] 3.341661e-10
+## [1] "Doctor visits = "
+## [1] 8
+## [1] 6.390927e-12
+## [1] "Doctor visits = "
+## [1] 9
+## [1] 1.086458e-13
+## [1] "Doctor visits = "
+## [1] 10
+## [1] 1.66228e-15
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{5}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LinM <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(doctorco }\OperatorTok{~}\StringTok{ }\NormalTok{sex }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{agesq }\OperatorTok{+}\StringTok{ }\NormalTok{income }\OperatorTok{+}\StringTok{ }\NormalTok{levyplus }\OperatorTok{+}\StringTok{ }\NormalTok{freepoor }\OperatorTok{+}\StringTok{ }\NormalTok{freerepa }\OperatorTok{+}\StringTok{ }\NormalTok{illness }\OperatorTok{+}\StringTok{ }\NormalTok{actdays }\OperatorTok{+}\StringTok{ }\NormalTok{hscore }\OperatorTok{+}\StringTok{ }\NormalTok{chcond1 }\OperatorTok{+}\StringTok{ }\NormalTok{chcond2, }\DataTypeTok{data=}\NormalTok{Pos)}
+\NormalTok{LinM}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = doctorco ~ sex + age + agesq + income + levyplus + 
+##     freepoor + freerepa + illness + actdays + hscore + chcond1 + 
+##     chcond2, data = Pos)
+## 
+## Coefficients:
+## (Intercept)          sex          age        agesq       income     levyplus  
+##    0.027632     0.033811     0.203201    -0.062103    -0.057323     0.035179  
+##    freepoor     freerepa      illness      actdays       hscore      chcond1  
+##   -0.103314     0.033241     0.059946     0.103192     0.016976     0.004384  
+##     chcond2  
+##    0.041617
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(LinM)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = doctorco ~ sex + age + agesq + income + levyplus + 
+##     freepoor + freerepa + illness + actdays + hscore + chcond1 + 
+##     chcond2, data = Pos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.1352 -0.2588 -0.1435 -0.0433  7.0327 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.027632   0.072220   0.383  0.70202    
+## sex          0.033811   0.021604   1.565  0.11764    
+## age          0.203201   0.410016   0.496  0.62020    
+## agesq       -0.062103   0.458716  -0.135  0.89231    
+## income      -0.057323   0.033089  -1.732  0.08326 .  
+## levyplus     0.035179   0.024882   1.414  0.15748    
+## freepoor    -0.103314   0.052471  -1.969  0.04901 *  
+## freerepa     0.033241   0.038157   0.871  0.38371    
+## illness      0.059946   0.008357   7.173 8.39e-13 ***
+## actdays      0.103192   0.003657  28.216  < 2e-16 ***
+## hscore       0.016976   0.005190   3.271  0.00108 ** 
+## chcond1      0.004384   0.023740   0.185  0.85349    
+## chcond2      0.041617   0.035863   1.160  0.24592    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.7139 on 5177 degrees of freedom
+## Multiple R-squared:  0.2018, Adjusted R-squared:    0.2 
+## F-statistic: 109.1 on 12 and 5177 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(LinM, Pos[}\DecValTok{5190}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      5190 
+## 0.1606531
+\end{verbatim}
+
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-28-2.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-28-3.pdf}
+\includegraphics{HW3_Melton_And_Brink_files/figure-latex/unnamed-chunk-28-4.pdf}
+
+Graphically at a distance, these two models seem to be mostly similar in
+slope. However, a closer look reveals more nuanced features in both
+models.The Gaussian LM slopes slightly negatively until x =
+\textasciitilde0.5 and then reverses slope direction, eventually forming
+a gradual shape similar to a square root equation. The Poisson GLM
+appears to have a gradual bell or Gaussian shaped curve shape.
+
+\end{document}

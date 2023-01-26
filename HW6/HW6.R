@@ -1,0 +1,139 @@
+#Agresti Chapter 6: 6.1, 6.6, 6.8, 6.12, 6.16, 6.17, 6.22
+
+library(MASS)
+library(rpart)
+library(epiR)
+library(ggplot2)
+library(vcdExtra)
+library(vcd)
+library(lmtest)
+library(caret)
+library(ROCR)
+library(pROC)
+
+# 6.1
+' A model fit predicting preference for President (Democrat, Republican, Independent)
+using x = annual income (in $10,000 dollars) is log(^??D/^??I ) = 3.3 ??? 0.2x and log(^??R/^??I ) = 1.0 + 0.3x.'
+
+#a) State the prediction equation for log(^??R/^??D). Interpret its slope.
+
+'log(^??D/^??I ) = 3.3 ??? 0.2x and log(^??R/^??I ) = 1.0 + 0.3x.
+
+THe prediction equation is log(^??R/^??I )-log(^??D/^??I)
+=log(^??R)-log(^??D)=-2.3 +5x
+Now if x = $10000, the slope suggests that republicans increase by 0.5 per $10k.'
+
+#b) Find the range of x for which ^??R > ^??D.
+' So for ^??R > ^??D, after a few manipulations we get to exp(1.0 + 0.3x) >exp(3.3-0.2x)->
+0.5x > 2.3-> x > 4.6. Therefore, for x = $10000, the range is greater than $46000 for 
+republicans.'
+
+#c) State the prediction equation for ^??I.
+' ^??I= 1/(exp(1+0.3x) + exp(3.3-0.2x))'
+
+# 6.6 
+'Does marital happiness depend on family income? For the 2002 General Social
+Survey, counts in the happiness categories (not, pretty, very) were (6, 43, 75)
+for below average income, (6, 113, 178) for average income, and (6, 57, 117)
+for above average income. Table 6.15 shows output for a baseline-category
+logit model with very happy as the baseline category and scores {1, 2, 3} for
+the income categories.'
+
+'a) Report the prediction equations from this table.
+
+log(??1/??3) = -2.5551 - 0.2275x
+log(??2/??4) = -0.3513 - 0.0962x
+
+b) Interpret the income effect in the first equation.
+Here, the income and happiness both increase so it appears that there could
+be some relationship here. However, it should be mentioned that the P-Values are all >> than
+0.05 except for the intercept.
+
+c) Report theWald test statistic and P-value for testing that marital happiness
+is independent of family income. Interpret.
+The given Wald Test statistic is reported to be 0.943 and the P-Value is -0.6240.
+These results suggest that you dont need to be rich to have a happy marriage (although
+it would be nice).
+
+
+d) Does the model fit adequately? Justify your answer.The ratio of the deviance/df suggests
+that the model is not a great fit. The provided pvalue suggests the same.
+
+
+e) Estimate the probability that a person with average family income reports
+a very happy marriage.
+
+??3 = 1/(1+exp(-2.5551-2*0.2275) + exp(-0.3513-2*0.0962)))
+   = 1/1.629
+  =0.61
+   '
+   
+#6.8
+'Table 6.17 results from a clinical trial for the treatment of small-cell lung cancer.
+Patients were randomly assigned to two treatment groups. The sequential therapy
+administered the same combination of chemotherapeutic agents in each
+treatment cycle. The alternating therapy used three different combinations,
+alternating from cycle to cycle.'
+library(VGAM)
+'a. Fit a cumulative logit model with main effects for treatment and gender.
+Interpret the estimated treatment effect.'
+
+
+small.cell = read.csv("SmallCell.csv", header=TRUE)
+small.cell$Response = ordered(small.cell$Response,c("Pro","NoCh", "ParRem", "CompRem"))
+
+(fit.small.cell <- vglm(Response~small.cell$Gender+small.cell$Therapy, cumulative(parallel= TRUE, reverse = FALSE), weights = Count, data=small.cell))
+summary(fit.small.cell)
+exp(-0.5807)
+exp(-0.5414)
+'For treatment the coefficient is -0.5807 and calculates to odds of 0.5595 for sequential therapy vs alternating. 
+For gender, the coefficient is -0.5414 to which calculates to odds if 0.581 for males response vs female. '
+
+'b. Fit the model that also contains an interaction term between treatment
+and gender. Interpret the interaction term by showing how the estimated
+treatment effect varies by gender.'
+
+(fit.small.cell2 <- vglm(Response~small.cell$Gender+small.cell$Therapy +(small.cell$Therapy*small.cell$Gender), cumulative(parallel= TRUE, reverse = FALSE), weights = Count, data=small.cell))
+summary(fit.small.cell2)
+exp(0.5904)
+' The interaction term between gender and therapy is 0.5904 with odds of ~1.8.'
+
+'c. Does the interaction model give a significantly better fit?
+By comparison of the resisidual deviance to DF ratio of both models. We see that the deviance is 788 for the first model and 789 for the interaction model. These values
+suggest that there is not really a significant difference in the two models.
+
+NEEED TO ANSWER 
+'
+
+
+
+
+#6.12
+'Table 6.18 shows results from the 2000 General Social Survey relating happiness
+and religious attendance (1 = at most several times a year, 2 = once a
+month to several times a year, 3 = every week to several times a week).'
+
+happy = read.csv("Happy612.csv")
+happy$Happiness = ordered(happy$Happiness, c("NTH", "PH", "VH"))
+fit.happy = vglm(Happiness~happy$Religion, cumulative(parallel = TRUE, reverse = FALSE),
+                 weights = Count, data = happy )
+summary(fit.happy)
+
+'a. Fit a multinomial model. Conduct descriptive and inferential analyses about
+the association.'
+happy2 = reshape(happy[,c("Religion", "Happiness", "Count")], timevar = c("Happiness"),idvar = c("Religion"), direction = "wide" )
+fit.happy2 = vglm(cbind(Count.NTH, Count.PH, Count.VH)~Religion, cumulative(parallel = TRUE, reverse = FALSE), data = happy2)
+summary(fit.happy2)
+'In this situation, because the religious coefficient is negative, as x increase, the probability 
+decreases. The summary also provides a very small p-value indicating that we shall reject the null hypothesis. '
+
+'b. Analyze the model goodness of fit.'
+'The residual deviance to DF ratio suggests that this model fits our data well.'
+
+
+
+
+
+
+
+
